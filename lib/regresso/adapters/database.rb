@@ -28,10 +28,12 @@ module Regresso
       private
 
       def with_connection
-        conn = ActiveRecord::Base.establish_connection(@connection_config).connection
-        yield conn
+        ActiveRecord::Base.establish_connection(@connection_config)
+        ActiveRecord::Base.connection_pool.with_connection do |conn|
+          yield conn
+        end
       ensure
-        conn&.close
+        ActiveRecord::Base.connection_pool.disconnect! if ActiveRecord::Base.connected?
       end
 
       def sanitize_query

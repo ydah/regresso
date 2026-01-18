@@ -13,12 +13,17 @@ RSpec.describe Regresso::WebUI::Server do
     described_class
   end
 
+  before do
+    header "Host", "localhost"
+  end
+
   it "serves index" do
     get "/"
     expect(last_response.status).to eq(200)
   end
 
   it "creates and retrieves results" do
+    header "Content-Type", "application/json"
     post "/api/results", { name: "Run", summary: { passed: true }, diffs: [] }.to_json
     expect(last_response.status).to eq(201)
 
@@ -28,6 +33,7 @@ RSpec.describe Regresso::WebUI::Server do
   end
 
   it "filters diffs" do
+    header "Content-Type", "application/json"
     post "/api/results", {
       name: "Run",
       summary: { passed: false },
