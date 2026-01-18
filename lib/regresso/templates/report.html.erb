@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Regresso Report</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 24px; }
+      table { border-collapse: collapse; width: 100%; margin-top: 16px; }
+      th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+      th { background: #f4f4f4; }
+      .diff-added { color: #0a7d00; }
+      .diff-removed { color: #a40000; }
+      .diff-changed { color: #0a4aa8; }
+    </style>
+  </head>
+  <body>
+    <h1>Regresso Report</h1>
+
+    <p><strong>Passed:</strong> <%= @result.passed? %></p>
+    <p><strong>Total diffs:</strong> <%= @result.diffs.size %></p>
+    <p><strong>Meaningful diffs:</strong> <%= @result.meaningful_diffs.size %></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Path</th>
+          <th>Old</th>
+          <th>New</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @result.meaningful_diffs.each do |diff| %>
+          <tr>
+            <td><%= diff.path.to_s %></td>
+            <td><%= diff.old_value.inspect %></td>
+            <td><%= diff.new_value.inspect %></td>
+            <td class="diff-<%= diff.type %>"><%= diff.type %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </body>
+</html>
