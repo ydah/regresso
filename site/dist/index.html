@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Regresso - Regression testing for Ruby</title>
+    <meta name="description" content="Regression testing for Ruby APIs, files, and data snapshots.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/regresso/assets/site.css">
+  </head>
+  <body>
+    <div class="ambient-orbit"></div>
+
+    <section class="hero">
+  <header class="nav">
+    <div class="logo">
+      <img src="/regresso/assets/logo-header.svg" alt="Regresso logo">
+      <span>Regresso</span>
+    </div>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#adapters">Adapters</a>
+      <a href="#how">How It Works</a>
+      <a href="#web-ui">Web UI</a>
+      <a href="#quick-start" class="button ghost">Quick Start</a>
+    </nav>
+  </header>
+
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">Regression testing for Ruby data</p>
+      <h1>Catch production drift across APIs, files, and databases.</h1>
+      <p class="lead">Regresso compares structured outputs with precision tolerances, ignore rules, and snapshot workflows. Ship confidently, even when data changes are subtle.</p>
+      <div class="cta">
+        <a class="button primary" href="#quick-start">Get started</a>
+        <a class="button ghost" href="https://github.com/ydah/regresso">GitHub</a>
+      </div>
+      <div class="signal">
+        <span>Ruby 3.2+</span>
+        <span>APIs · CSV · DB · GraphQL</span>
+        <span>CI-ready reports</span>
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <div class="card-header">
+        <span>Latest comparison</span>
+        <span class="status ok">Passed</span>
+      </div>
+      <div class="card-body">
+        <pre><code>expect(new_api)
+  .to have_no_regression_from(old_api)
+  .with_tolerance(0.01)
+  .ignoring("$.timestamp")</code></pre>
+      </div>
+      <div class="card-footer">
+        <div>
+          <p class="label">Meaningful diffs</p>
+          <p class="value">0</p>
+        </div>
+        <div>
+          <p class="label">Runtime</p>
+          <p class="value">1.2s</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features" class="section">
+  <div class="section-title">
+    <h2>Designed for regression certainty</h2>
+    <p>Pinpoint where outputs drift and decide what matters to your product.</p>
+  </div>
+  <div class="feature-grid">
+    <article class="feature">
+      <h3>Precision diffs</h3>
+      <p>JSONPath-level ignores and numeric tolerances keep the signal clean.</p>
+    </article>
+    <article class="feature">
+      <h3>Source adapters</h3>
+      <p>Compare HTTP, CSV, JSON files, GraphQL, database queries, and snapshots.</p>
+    </article>
+    <article class="feature">
+      <h3>Snapshots</h3>
+      <p>Freeze stable output and review changes when business logic evolves.</p>
+    </article>
+    <article class="feature">
+      <h3>Parallel runs</h3>
+      <p>Run many comparisons concurrently and aggregate CI-ready reports.</p>
+    </article>
+    <article class="feature">
+      <h3>Test frameworks</h3>
+      <p>RSpec matchers and Minitest assertions come out of the box.</p>
+    </article>
+    <article class="feature">
+      <h3>Web UI</h3>
+      <p>Inspect stored results, filter diffs, and share reports with your team.</p>
+    </article>
+  </div>
+</section>
+
+  </body>
+</html>
+
+<section id="quick-start" class="section split">
+  <div>
+    <h2>Quick start</h2>
+    <p>Install the gem, compare two sources, and inspect the summary.</p>
+    <div class="callouts">
+      <div>
+        <h4>Install</h4>
+        <pre><code>bundle add regresso</code></pre>
+      </div>
+      <div>
+        <h4>Compare</h4>
+        <pre><code>result = Regresso::Comparator.new(
+  source_a: old_api,
+  source_b: new_api
+).compare
+puts result.summary</code></pre>
+      </div>
+    </div>
+  </div>
+  <aside class="note">
+    <h4>Snapshot flow</h4>
+    <p>Lock in stable outputs and keep regressions intentional.</p>
+    <pre><code>expect(payload)
+  .to match_snapshot("report_total")</code></pre>
+    <p class="small">Set <code>UPDATE_SNAPSHOTS=1</code> to refresh stored snapshots.</p>
+  </aside>
+</section>
+
+<section id="adapters" class="section">
+  <div class="section-title">
+    <h2>Adapters you can chain together</h2>
+    <p>Everything is just a source that responds to <code>fetch</code>.</p>
+  </div>
+  <div class="adapter-grid">
+    <div class="adapter">HTTP APIs</div>
+    <div class="adapter">CSV exports</div>
+    <div class="adapter">JSON files</div>
+    <div class="adapter">GraphQL queries</div>
+    <div class="adapter">GraphQL batches</div>
+    <div class="adapter">Database queries</div>
+    <div class="adapter">Database snapshots</div>
+    <div class="adapter">Custom Proc adapters</div>
+  </div>
+</section>
+
+<section id="how" class="section">
+  <div class="section-title">
+    <h2>How it works</h2>
+    <p>Regresso compares structured data with a clear audit trail.</p>
+  </div>
+  <ol class="steps">
+    <li>Normalize inputs from two sources.</li>
+    <li>Compute diffs with type coercion and tolerance rules.</li>
+    <li>Filter out ignored paths and noise.</li>
+    <li>Generate reports for CI or the Web UI.</li>
+  </ol>
+</section>
+
+<section id="web-ui" class="section split">
+  <div>
+    <h2>Web UI for shared visibility</h2>
+    <p>Store results on disk, filter diffs, and keep a browseable trail of comparisons.</p>
+    <pre><code>require "regresso/web_ui"
+
+store = Regresso::WebUI::ResultStore.new(
+  storage_path: "tmp/regresso_results"
+)
+Regresso::WebUI::Server.set :result_store, store
+Regresso::WebUI::Server.run!</code></pre>
+  </div>
+  <div class="ui-preview">
+    <div class="ui-header">
+      <span>Run #128</span>
+      <span class="pill">Diffs</span>
+    </div>
+    <div class="ui-body">
+      <div class="ui-row">
+        <span>$.prices[2]</span>
+        <span>19.99</span>
+        <span>20.10</span>
+        <span class="pill warn">changed</span>
+      </div>
+      <div class="ui-row">
+        <span>$.users[4]</span>
+        <span>nil</span>
+        <span>"Nia"</span>
+        <span class="pill ok">added</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section split">
+  <div>
+    <h2>CI-friendly outputs</h2>
+    <p>Generate JUnit XML or GitHub annotations from parallel runs.</p>
+    <pre><code>runner = Regresso::Parallel::Runner.new(
+  comparisons: comparisons,
+  workers: 4
+)
+result = runner.run
+
+reporter = Regresso::CI::Reporter.new(result)
+File.write("tmp/regresso.xml", reporter.to_junit_xml)</code></pre>
+  </div>
+  <div class="note">
+    <h4>History tracking</h4>
+    <p>Persist results and build weekly trend reports.</p>
+    <pre><code>store = Regresso::History::Store.new
+store.record(result)
+report = Regresso::History::TrendReporter.new(store)
+puts report.generate(period: :week)</code></pre>
+  </div>
+</section>
+
+<section class="section footer">
+  <div>
+    <h2>Ready to stop regressions before they ship?</h2>
+    <p>Wire Regresso into your test suite and keep data drift visible.</p>
+  </div>
+  <div class="cta">
+    <a class="button primary" href="#quick-start">Start now</a>
+    <a class="button ghost" href="https://rubygems.org/gems/regresso">RubyGems</a>
+  </div>
+</section>

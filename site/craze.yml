@@ -1,0 +1,24 @@
+site:
+  title: "Regresso"
+  url: "https://ydah.github.io/regresso"
+  language: "en"
+  description: "Regression testing for Ruby APIs, files, and data snapshots."
+
+build:
+  out_dir: "dist"
+  base_path: "/regresso/"
+  clean: true
+
+content:
+  dir: "content"
+
+templates:
+  dir: "templates"
+
+assets:
+  dir: "assets"
+
+integrations:
+  - sitemap
+  - rss
+  - search_index
