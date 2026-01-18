@@ -1,6 +1,5 @@
-# Regresso
-
 <p align="center">
+  <img src="assets/logo-header.svg" alt="regresso header logo">
   <b>Regression testing for Ruby APIs, files, and data snapshots.</b>
   <br>
   Compare outputs across environments with tolerances and ignore rules.
