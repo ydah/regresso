@@ -2,11 +2,14 @@
 
 module Regresso
   module CI
+    # Formats parallel results into GitHub Actions annotations.
     class GitHubAnnotationFormatter
+      # @param result [Regresso::Parallel::ParallelResult]
       def initialize(result)
         @result = result
       end
 
+      # @return [Array<Hash>] GitHub annotations payload
       def annotations
         @result.results.map do |res|
           next unless res.failed? || res.error?
@@ -22,6 +25,7 @@ module Regresso
         end.compact
       end
 
+      # @return [String] GitHub Actions workflow annotation output
       def output_for_workflow
         annotations.map do |annotation|
           "::error file=#{annotation[:file]},line=#{annotation[:line]}::#{annotation[:message]}"

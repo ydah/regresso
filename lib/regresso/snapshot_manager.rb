@@ -4,7 +4,9 @@ require "json"
 require "fileutils"
 
 module Regresso
+  # Manages JSON snapshots on disk.
   class SnapshotManager
+    # Default directory for stored snapshots.
     DEFAULT_DIR = "spec/snapshots/regresso"
 
     # @param base_dir [String,nil]

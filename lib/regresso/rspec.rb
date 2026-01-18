@@ -4,7 +4,9 @@ require "regresso"
 require "regresso/snapshot_manager"
 
 module Regresso
+  # RSpec integration for Regresso.
   module RSpec
+    # Custom matchers for regression and snapshot comparisons.
     module Matchers
       extend ::RSpec::Matchers::DSL
 

@@ -2,11 +2,14 @@
 
 module Regresso
   module Parallel
+    # Aggregates comparison results into a summary.
     class ResultAggregator
+      # @param results [Array<Regresso::Parallel::ComparisonResult>]
       def initialize(results)
         @results = results
       end
 
+      # @return [Regresso::Parallel::ParallelResult]
       def aggregate
         ParallelResult.new(
           total: @results.size,

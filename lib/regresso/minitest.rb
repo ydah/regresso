@@ -3,8 +3,20 @@
 require "regresso"
 require "regresso/snapshot_manager"
 
+# Minitest helpers for Regresso comparisons.
+# @!parse
+#   # Minitest namespace from the minitest gem.
+#   module ::Minitest
+#   end
+#
+#   # Base test class from minitest.
+#   class ::Minitest::Test
+#   end
+
 module Regresso
+  # Minitest integration helpers.
   module Minitest
+    # Assertion helpers for regression testing.
     module Assertions
       # Asserts that two sources have no regression.
       #

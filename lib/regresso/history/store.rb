@@ -5,11 +5,16 @@ require "time"
 
 module Regresso
   module History
+    # Manages persistence and queries for historical results.
     class Store
+      # @param storage_backend [Regresso::History::FileBackend]
       def initialize(storage_backend: FileBackend.new)
         @backend = storage_backend
       end
 
+      # @param result [Regresso::Parallel::ParallelResult]
+      # @param metadata [Hash]
+      # @return [Regresso::History::Entry]
       def record(result, metadata = {})
         entry = Entry.new(
           id: SecureRandom.uuid,
@@ -21,15 +26,24 @@ module Regresso
         entry
       end
 
+      # @param id [String]
+      # @return [Regresso::History::Entry,nil]
       def find(id)
         @backend.find(id)
       end
 
+      # @param filters [Hash]
+      # @return [Array<Regresso::History::Entry>]
       def list(filters = {})
         entries = @backend.all
         filter_entries(entries, filters)
       end
 
+      # @param start_date [Time,nil]
+      # @param end_date [Time,nil]
+      # @param status [Symbol,nil]
+      # @param limit [Integer,nil]
+      # @return [Array<Regresso::History::Entry>]
       def query(start_date: nil, end_date: nil, status: nil, limit: nil)
         entries = @backend.all
         entries = entries.select do |entry|
@@ -38,6 +52,8 @@ module Regresso
         limit ? entries.first(limit) : entries
       end
 
+      # @param period [Symbol]
+      # @return [Hash]
       def statistics(period: :week)
         entries = list_for_period(period)
         Statistics.new(entries).calculate

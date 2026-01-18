@@ -2,9 +2,32 @@
 
 module Regresso
   module Parallel
+    # Summary of multiple comparison results.
     class ParallelResult
-      attr_reader :total, :passed, :failed, :errors, :results, :total_duration
+      # @return [Integer]
+      attr_reader :total
 
+      # @return [Integer]
+      attr_reader :passed
+
+      # @return [Integer]
+      attr_reader :failed
+
+      # @return [Integer]
+      attr_reader :errors
+
+      # @return [Array<Regresso::Parallel::ComparisonResult>]
+      attr_reader :results
+
+      # @return [Float]
+      attr_reader :total_duration
+
+      # @param total [Integer]
+      # @param passed [Integer]
+      # @param failed [Integer]
+      # @param errors [Integer]
+      # @param results [Array<Regresso::Parallel::ComparisonResult>]
+      # @param total_duration [Float]
       def initialize(total:, passed:, failed:, errors:, results:, total_duration:)
         @total = total
         @passed = passed
@@ -14,10 +37,12 @@ module Regresso
         @total_duration = total_duration
       end
 
+      # @return [Boolean]
       def success?
         failed.zero? && errors.zero?
       end
 
+      # @return [Hash]
       def summary
         {
           total: total,
@@ -29,10 +54,12 @@ module Regresso
         }
       end
 
+      # @return [Array<Regresso::Parallel::ComparisonResult>]
       def failed_results
         results.select(&:failed?)
       end
 
+      # @return [Array<Regresso::Parallel::ComparisonResult>]
       def error_results
         results.select(&:error?)
       end

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Regresso
+  # Compares two data sources and produces a {Regresso::Result}.
   class Comparator
     # Creates a comparator for two data sources.
     #

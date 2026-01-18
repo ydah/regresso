@@ -1,8 +1,19 @@
 # frozen_string_literal: true
 
 module Regresso
+  # Holds the outcome of comparing two sources.
   class Result
-    attr_reader :source_a, :source_b, :diffs, :config
+    # @return [Object]
+    attr_reader :source_a
+
+    # @return [Object]
+    attr_reader :source_b
+
+    # @return [Array<Regresso::Difference>]
+    attr_reader :diffs
+
+    # @return [Regresso::Configuration]
+    attr_reader :config
 
     # @param source_a [Object]
     # @param source_b [Object]

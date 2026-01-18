@@ -3,6 +3,7 @@
 require "json"
 
 module Regresso
+  # Computes differences between two structured values.
   class Differ
     # @param config [Regresso::Configuration]
     def initialize(config)

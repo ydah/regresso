@@ -19,7 +19,9 @@ require_relative "regresso/adapters/graphql_batch"
 require_relative "regresso/snapshot_manager"
 require_relative "regresso/reporter"
 
+# Regresso provides regression comparison utilities for structured data.
 module Regresso
+  # Base error for Regresso-specific failures.
   class Error < StandardError; end
 
   class << self

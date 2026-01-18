@@ -5,6 +5,7 @@ require "faraday/follow_redirects"
 
 module Regresso
   module Adapters
+    # Adapter that fetches data from an HTTP endpoint.
     class Http < Base
       # @param base_url [String]
       # @param endpoint [String]

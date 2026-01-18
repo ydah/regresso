@@ -5,7 +5,10 @@ require "faraday"
 
 module Regresso
   module Notifiers
+    # Microsoft Teams webhook notifier.
     class MicrosoftTeams < Base
+      # @param webhook_url [String]
+      # @param notify_on [Symbol] :always, :failure, or :success
       def initialize(webhook_url:, notify_on: :failure)
         @webhook_url = webhook_url
         @notify_on = notify_on

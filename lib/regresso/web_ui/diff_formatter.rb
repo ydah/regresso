@@ -4,7 +4,11 @@ require "cgi"
 
 module Regresso
   module WebUI
+    # Formats diffs for Web UI rendering.
     class DiffFormatter
+      # @param diffs [Array<Hash>]
+      # @param mode [Symbol] :html or :plain
+      # @return [String]
       def format(diffs, mode: :html)
         case mode
         when :html

@@ -5,7 +5,14 @@ require "faraday"
 
 module Regresso
   module Notifiers
+    # Slack webhook notifier.
     class Slack < Base
+      # @param webhook_url [String]
+      # @param channel [String,nil]
+      # @param notify_on [Symbol] :always, :failure, or :success
+      # @param mention [String,nil]
+      # @param username [String,nil]
+      # @param icon_emoji [String,nil]
       def initialize(webhook_url:, channel: nil, notify_on: :failure, mention: nil, username: nil, icon_emoji: nil)
         @webhook_url = webhook_url
         @channel = channel

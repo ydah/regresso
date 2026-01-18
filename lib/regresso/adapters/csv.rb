@@ -4,6 +4,7 @@ require "csv"
 
 module Regresso
   module Adapters
+    # Adapter that parses CSV input into a comparable structure.
     class Csv < Base
       # @param path [String,nil]
       # @param content [String,nil]

@@ -1,12 +1,32 @@
 # frozen_string_literal: true
 
 module Regresso
+  # Stores comparison settings used by {Regresso::Differ} and {Regresso::Comparator}.
   class Configuration
-    attr_accessor :default_tolerance,
-                  :ignore_paths,
-                  :tolerance_overrides,
-                  :array_order_sensitive,
-                  :type_coercion
+    # Default numeric tolerance applied when no path-specific override exists.
+    #
+    # @return [Float]
+    attr_accessor :default_tolerance
+
+    # Paths or patterns to ignore during comparison.
+    #
+    # @return [Array<String,Regexp>]
+    attr_accessor :ignore_paths
+
+    # Per-path tolerance overrides keyed by JSON path string.
+    #
+    # @return [Hash{String => Float}]
+    attr_accessor :tolerance_overrides
+
+    # Whether array order must match during comparison.
+    #
+    # @return [Boolean]
+    attr_accessor :array_order_sensitive
+
+    # Whether numeric strings should be coerced when comparing.
+    #
+    # @return [Boolean]
+    attr_accessor :type_coercion
 
     def initialize
       @default_tolerance = 0.0

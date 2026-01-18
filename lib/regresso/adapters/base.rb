@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 module Regresso
+  # Data source adapters for comparison inputs.
   module Adapters
+    # Base interface for adapters.
     class Base
       attr_reader :options
 

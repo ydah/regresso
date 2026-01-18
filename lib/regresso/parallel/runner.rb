@@ -1,16 +1,23 @@
 # frozen_string_literal: true
 
 module Regresso
+  # Parallel execution utilities for multiple comparisons.
   module Parallel
+    # Executes multiple comparisons concurrently.
     class Runner
+      # Default number of worker threads.
       DEFAULT_WORKERS = 4
 
+      # @param comparisons [Array<Hash>]
+      # @param workers [Integer]
+      # @param config [Regresso::Configuration]
       def initialize(comparisons:, workers: DEFAULT_WORKERS, config: Configuration.new)
         @comparisons = comparisons
         @workers = workers
         @config = config
       end
 
+      # @return [Regresso::Parallel::ParallelResult]
       def run
         results = execute_parallel
         ResultAggregator.new(results).aggregate

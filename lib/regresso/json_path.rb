@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 module Regresso
+  # Immutable JSON-path-like identifier used in diffs.
   class JsonPath
+    # @return [Array<String,Integer>]
     attr_reader :segments
 
     # Returns the root path.

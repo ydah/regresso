@@ -2,9 +2,24 @@
 
 module Regresso
   module Parallel
+    # Result wrapper for a single comparison execution.
     class ComparisonResult
-      attr_reader :name, :result, :error, :duration
+      # @return [String]
+      attr_reader :name
 
+      # @return [Regresso::Result,nil]
+      attr_reader :result
+
+      # @return [StandardError,nil]
+      attr_reader :error
+
+      # @return [Float]
+      attr_reader :duration
+
+      # @param name [String]
+      # @param result [Regresso::Result,nil]
+      # @param error [StandardError,nil]
+      # @param duration [Float]
       def initialize(name:, result: nil, error: nil, duration:)
         @name = name
         @result = result
@@ -24,6 +39,7 @@ module Regresso
         !error.nil?
       end
 
+      # @return [Symbol] :passed, :failed, or :error
       def status
         return :error if error?
         return :passed if passed?

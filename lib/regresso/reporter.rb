@@ -4,6 +4,7 @@ require "json"
 require "erb"
 
 module Regresso
+  # Formats a {Regresso::Result} into text, JSON, or HTML.
   class Reporter
     # @param result [Regresso::Result]
     def initialize(result)

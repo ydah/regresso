@@ -4,11 +4,14 @@ require "builder"
 
 module Regresso
   module CI
+    # Formats parallel results into JUnit XML.
     class JUnitXmlFormatter
+      # @param result [Regresso::Parallel::ParallelResult]
       def initialize(result)
         @result = result
       end
 
+      # @return [String] JUnit XML payload
       def format
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.instruct!

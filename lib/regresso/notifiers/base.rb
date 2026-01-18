@@ -1,8 +1,14 @@
 # frozen_string_literal: true
 
 module Regresso
+  # Notification backends for reporting results.
   module Notifiers
+    # Base class for notification integrations.
     class Base
+      # Sends a notification if the notifier deems it necessary.
+      #
+      # @param result [Regresso::Parallel::ParallelResult]
+      # @return [void]
       def notify(result)
         return unless should_notify?(result)
 

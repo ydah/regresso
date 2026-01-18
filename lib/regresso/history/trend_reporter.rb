@@ -4,11 +4,15 @@ require "erb"
 
 module Regresso
   module History
+    # Generates an HTML trend report for stored results.
     class TrendReporter
+      # @param store [Regresso::History::Store]
       def initialize(store)
         @store = store
       end
 
+      # @param period [Symbol]
+      # @return [String] HTML report
       def generate(period: :week)
         stats = @store.statistics(period: period)
         template = <<~HTML

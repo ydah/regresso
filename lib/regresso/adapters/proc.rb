@@ -2,6 +2,7 @@
 
 module Regresso
   module Adapters
+    # Adapter that calls a provided Proc or block for data.
     class Proc < Base
       # @param callable [Proc,nil]
       # @param description [String]

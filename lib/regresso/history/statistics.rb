@@ -2,11 +2,14 @@
 
 module Regresso
   module History
+    # Computes aggregated statistics from stored entries.
     class Statistics
+      # @param entries [Array<Regresso::History::Entry>]
       def initialize(entries)
         @entries = entries
       end
 
+      # @return [Hash] summarized statistics
       def calculate
         {
           total_runs: @entries.size,

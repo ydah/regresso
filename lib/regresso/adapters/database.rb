@@ -4,7 +4,12 @@ require "active_record"
 
 module Regresso
   module Adapters
+    # Adapter that runs a query against a database connection.
     class Database < Base
+      # @param connection_config [Hash]
+      # @param query [String]
+      # @param params [Hash]
+      # @param row_identifier [String,Symbol,nil]
       def initialize(connection_config:, query:, params: {}, row_identifier: nil)
         super()
         @connection_config = connection_config
@@ -13,6 +18,9 @@ module Regresso
         @row_identifier = row_identifier
       end
 
+      # Executes the query and returns rows as hashes.
+      #
+      # @return [Array<Hash>]
       def fetch
         with_connection do |conn|
           result = conn.exec_query(sanitize_query)
@@ -21,6 +29,7 @@ module Regresso
         end
       end
 
+      # @return [String]
       def description
         "Database Query: #{@query.to_s.tr("\n", " ")[0, 50]}"
       end

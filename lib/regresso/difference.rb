@@ -1,8 +1,19 @@
 # frozen_string_literal: true
 
 module Regresso
+  # Represents a single difference between two values.
   class Difference
-    attr_reader :path, :old_value, :new_value, :type
+    # @return [Regresso::JsonPath]
+    attr_reader :path
+
+    # @return [Object]
+    attr_reader :old_value
+
+    # @return [Object]
+    attr_reader :new_value
+
+    # @return [Symbol] one of :added, :removed, :changed
+    attr_reader :type
 
     # @param path [Regresso::JsonPath]
     # @param old_value [Object]

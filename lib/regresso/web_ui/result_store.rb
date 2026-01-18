@@ -6,13 +6,17 @@ require "securerandom"
 
 module Regresso
   module WebUI
+    # Simple file-backed store for Web UI results.
     class ResultStore
+      # @param storage_path [String,nil]
       def initialize(storage_path: nil)
         @storage_path = storage_path || "tmp/regresso_results"
         @cache = {}
         FileUtils.mkdir_p(@storage_path)
       end
 
+      # @param result [Hash]
+      # @return [String] stored result id
       def store(result)
         id = SecureRandom.uuid
         data = { "id" => id, "created_at" => Time.now.utc.iso8601(6) }.merge(result)
@@ -21,6 +25,8 @@ module Regresso
         id
       end
 
+      # @param id [String]
+      # @return [Hash,nil]
       def find(id)
         return @cache[id] if @cache.key?(id)
 
@@ -30,12 +36,15 @@ module Regresso
         @cache[id] = JSON.parse(File.read(path))
       end
 
+      # @return [Array<Hash>]
       def list
         Dir.glob(File.join(@storage_path, "*.json")).map do |path|
           find(File.basename(path, ".json"))
         end.compact.sort_by { |entry| Time.parse(entry["created_at"].to_s) }.reverse
       end
 
+      # @param id [String]
+      # @return [void]
       def delete(id)
         @cache.delete(id)
         FileUtils.rm_f(path_for(id))

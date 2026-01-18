@@ -4,6 +4,7 @@ require "json"
 
 module Regresso
   module Adapters
+    # Adapter that loads JSON content from a file.
     class JsonFile < Base
       # @param path [String]
       def initialize(path:)

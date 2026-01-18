@@ -7,7 +7,9 @@ require "regresso/web_ui/result_store"
 require "regresso/web_ui/diff_formatter"
 
 module Regresso
+  # Web UI server and helpers.
   module WebUI
+    # Sinatra-based Web UI server.
     class Server < Sinatra::Base
       set :public_folder, File.join(__dir__, "public")
       set :views, File.join(__dir__, "views")
