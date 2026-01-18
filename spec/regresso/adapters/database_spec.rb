@@ -11,11 +11,8 @@ RSpec.describe Regresso::Adapters::Database do
     }
   end
 
-  let(:db_path) do
-    file = Tempfile.new(["regresso", ".sqlite3"])
-    file.close
-    file.path
-  end
+  let(:db_file) { Tempfile.new(["regresso", ".sqlite3"]) }
+  let(:db_path) { db_file.path }
 
   before do
     ActiveRecord::Base.establish_connection(config)
@@ -28,7 +25,8 @@ RSpec.describe Regresso::Adapters::Database do
   end
 
   after do
-    File.delete(db_path) if File.exist?(db_path)
+    db_file.close
+    db_file.unlink
   end
 
   it "runs a query" do
