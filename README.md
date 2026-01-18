@@ -19,7 +19,9 @@
   <a href="#quick-start">Quick Start</a> •
   <a href="#how-it-works">How It Works</a> •
   <a href="#installation">Installation</a> •
-  <a href="#configuration">Configuration</a>
+  <a href="#configuration">Configuration</a> •
+  <a href="#documentation">Documentation</a> •
+  <a href="#web-ui">Web UI</a>
 </p>
 
 ## Features
@@ -29,6 +31,9 @@
 - Ignore paths by JSONPath or regex to avoid noisy fields
 - Snapshot testing for stable outputs
 - RSpec and Minitest integrations
+- GraphQL, database, and batch comparisons
+- Parallel execution with CI-ready reports
+- Optional Web UI for browsing results
 
 ## Quick Start
 
@@ -119,6 +124,66 @@ include_examples "regresso:api_regression", {
 }
 ```
 
+### Database query comparison
+
+```ruby
+old_db = Regresso::Adapters::Database.new(
+  connection_config: { adapter: "sqlite3", database: "tmp/old.db" },
+  query: "SELECT * FROM users WHERE active = :active",
+  params: { active: true },
+  row_identifier: :id
+)
+
+new_db = Regresso::Adapters::Database.new(
+  connection_config: { adapter: "sqlite3", database: "tmp/new.db" },
+  query: "SELECT * FROM users WHERE active = :active",
+  params: { active: true },
+  row_identifier: :id
+)
+
+result = Regresso::Comparator.new(source_a: old_db, source_b: new_db).compare
+puts result.summary
+```
+
+### GraphQL batch comparison
+
+```ruby
+source_a = Regresso::Adapters::GraphQLBatch.new(
+  endpoint: "https://old.example.com/graphql",
+  queries: [
+    { name: "users", query: "{ users { id name } }" },
+    { name: "stats", query: "{ stats { total } }" }
+  ]
+)
+
+source_b = Regresso::Adapters::GraphQLBatch.new(
+  endpoint: "https://new.example.com/graphql",
+  queries: [
+    { name: "users", query: "{ users { id name } }" },
+    { name: "stats", query: "{ stats { total } }" }
+  ]
+)
+
+result = Regresso::Comparator.new(source_a: source_a, source_b: source_b).compare
+puts result.passed?
+```
+
+### Parallel comparisons
+
+```ruby
+comparisons = [
+  {
+    name: "sales",
+    source_a: Regresso::Adapters::Proc.new { { total: 120 } },
+    source_b: Regresso::Adapters::Proc.new { { total: 121 } }
+  }
+]
+
+runner = Regresso::Parallel::Runner.new(comparisons: comparisons, workers: 4)
+parallel_result = runner.run
+puts parallel_result.summary
+```
+
 ## Installation
 
 Add to your Gemfile:
@@ -151,11 +216,38 @@ end
 - CSV: `Regresso::Adapters::Csv`
 - JSON file: `Regresso::Adapters::JsonFile`
 - Proc: `Regresso::Adapters::Proc`
+- Database query: `Regresso::Adapters::Database`
+- Database snapshot: `Regresso::Adapters::DatabaseSnapshot`
+- GraphQL: `Regresso::Adapters::GraphQL`
+- GraphQL batch: `Regresso::Adapters::GraphQLBatch`
 
 ## Test framework integration
 
 - RSpec: `require "regresso/rspec"`
 - Minitest: `require "regresso/minitest"`
+
+## Documentation
+
+```bash
+bundle exec rake yard
+```
+
+## CI reporting
+
+```ruby
+reporter = Regresso::CI::Reporter.new(parallel_result)
+File.write("tmp/regresso.xml", reporter.to_junit_xml)
+```
+
+## Web UI
+
+```ruby
+require "regresso/web_ui"
+
+store = Regresso::WebUI::ResultStore.new(storage_path: "tmp/regresso_results")
+Regresso::WebUI::Server.set :result_store, store
+Regresso::WebUI::Server.run!
+```
 
 ## Contributing
 
@@ -163,4 +255,4 @@ Bug reports and pull requests are welcome. Please run tests before submitting ch
 
 ## License
 
-MIT License. See `LICENSE` file for details.
+MIT License. See `LICENSE.txt` for details.
