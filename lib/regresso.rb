@@ -12,7 +12,22 @@ require_relative "regresso/adapters/proc"
 require_relative "regresso/adapters/json_file"
 require_relative "regresso/adapters/csv"
 require_relative "regresso/adapters/http"
+require_relative "regresso/snapshot_manager"
+require_relative "regresso/reporter"
 
 module Regresso
   class Error < StandardError; end
+
+  class << self
+    attr_accessor :configuration
+
+    def configure
+      self.configuration ||= Configuration.new
+      yield(configuration) if block_given?
+    end
+
+    def reset_configuration!
+      self.configuration = Configuration.new
+    end
+  end
 end
