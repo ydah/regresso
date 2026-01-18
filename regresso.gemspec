@@ -43,4 +43,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 13.0"
   spec.add_development_dependency "yard", "~> 0.9"
   spec.add_development_dependency "octokit", "~> 6.0"
+  spec.add_development_dependency "activerecord", ">= 6.0", "< 7.1"
+  spec.add_development_dependency "sqlite3", "~> 1.7"
 end
