@@ -6,11 +6,12 @@
 </p>
 
 <p align="center">
-  <a href="https://rubygems.org/gems/regresso">
-    <img src="https://img.shields.io/gem/v/regresso?color=2f6f6f" alt="Gem version">
+  <img src="https://img.shields.io/badge/ruby-%3E%3D%203.2-ruby.svg" alt="Ruby Version">
+  <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License">
+  <a href="https://badge.fury.io/rb/regresso"><img src="https://badge.fury.io/rb/regresso.svg" alt="Gem Version" height="18"></a>
+  <a href="https://github.com/ydah/regresso/actions/workflows/main.yml">
+    <img src="https://github.com/ydah/regresso/actions/workflows/main.yml/badge.svg" alt="CI Status">
   </a>
-  <img src="https://img.shields.io/badge/ruby-%3E%3D%203.0-701516" alt="Ruby version">
-  <img src="https://img.shields.io/badge/license-MIT-2f6f6f" alt="License">
 </p>
 
 <p align="center">
