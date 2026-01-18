@@ -6,6 +6,14 @@ require "regresso/snapshot_manager"
 module Regresso
   module Minitest
     module Assertions
+      # Asserts that two sources have no regression.
+      #
+      # @param source_a [Object]
+      # @param source_b [Object]
+      # @param tolerance [Float]
+      # @param ignore [Array<String,Regexp>]
+      # @param message [String,nil]
+      # @return [void]
       def assert_no_regression(source_a, source_b, tolerance: 0.0, ignore: [], message: nil)
         config = Regresso::Configuration.new
         config.default_tolerance = tolerance
@@ -23,6 +31,13 @@ module Regresso
         assert result.passed?, msg
       end
 
+      # Asserts that an object matches a stored snapshot.
+      #
+      # @param actual [Object]
+      # @param snapshot_name [String]
+      # @param tolerance [Float]
+      # @param ignore [Array<String,Regexp>]
+      # @return [void]
       def assert_matches_snapshot(actual, snapshot_name, tolerance: 0.0, ignore: [])
         manager = Regresso::SnapshotManager.new
         path = manager.path_for(snapshot_name)

@@ -2,12 +2,20 @@
 
 module Regresso
   class Comparator
+    # Creates a comparator for two data sources.
+    #
+    # @param source_a [#fetch] first data source
+    # @param source_b [#fetch] second data source
+    # @param config [Regresso::Configuration] comparison config
     def initialize(source_a:, source_b:, config: Configuration.new)
       @source_a = source_a
       @source_b = source_b
       @config = config
     end
 
+    # Compares two sources and returns the comparison result.
+    #
+    # @return [Regresso::Result]
     def compare
       data_a = fetch_data(@source_a)
       data_b = fetch_data(@source_b)

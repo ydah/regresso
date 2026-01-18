@@ -6,6 +6,11 @@ require "faraday/follow_redirects"
 module Regresso
   module Adapters
     class Http < Base
+      # @param base_url [String]
+      # @param endpoint [String]
+      # @param params [Hash]
+      # @param headers [Hash]
+      # @param method [Symbol]
       def initialize(base_url:, endpoint:, params: {}, headers: {}, method: :get)
         super()
         @base_url = base_url
@@ -15,6 +20,9 @@ module Regresso
         @method = method
       end
 
+      # Executes the HTTP request and returns parsed response.
+      #
+      # @return [Object]
       def fetch
         response = connection.public_send(@method, @endpoint) do |req|
           req.params = @params
@@ -28,6 +36,7 @@ module Regresso
         parse_response(response)
       end
 
+      # @return [String]
       def description
         "#{@method.to_s.upcase} #{@base_url}#{@endpoint}"
       end

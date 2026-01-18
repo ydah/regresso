@@ -3,18 +3,24 @@
 module Regresso
   module Adapters
     class Proc < Base
+      # @param callable [Proc,nil]
+      # @param description [String]
       def initialize(callable = nil, description: "Custom source", &block)
         super()
         @callable = callable || block
         @description_text = description
       end
 
+      # Executes the callable and returns its value.
+      #
+      # @return [Object]
       def fetch
         raise ArgumentError, "callable is required" unless @callable
 
         @callable.call
       end
 
+      # @return [String]
       def description
         @description_text
       end

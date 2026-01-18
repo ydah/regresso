@@ -21,11 +21,18 @@ module Regresso
   class << self
     attr_accessor :configuration
 
+    # Yields the global configuration.
+    #
+    # @yieldparam config [Regresso::Configuration]
+    # @return [void]
     def configure
       self.configuration ||= Configuration.new
       yield(configuration) if block_given?
     end
 
+    # Resets the global configuration to defaults.
+    #
+    # @return [void]
     def reset_configuration!
       self.configuration = Configuration.new
     end

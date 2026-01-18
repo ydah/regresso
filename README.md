@@ -1,39 +1,131 @@
 # Regresso
 
-TODO: Delete this and the text below, and describe your gem
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/regresso`. To experiment with that code, run `bin/console` for an interactive prompt.
+Regresso is a regression testing gem for Ruby applications. It compares outputs (API JSON, CSV exports, or arbitrary data) across environments and detects unintended differences.
 
 ## Installation
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
-
-Install the gem and add to the application's Gemfile by executing:
+Add to your Gemfile:
 
 ```bash
-bundle add UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+bundle add regresso
 ```
 
-If bundler is not being used to manage dependencies, install the gem by executing:
+Or install directly:
 
 ```bash
-gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+gem install regresso
 ```
 
-## Usage
+## Quick Start
 
-TODO: Write usage instructions here
+```ruby
+require "regresso/rspec"
 
-## Development
+old_api = { base_url: "https://old.example.com", endpoint: "/reports/sales" }
+new_api = { base_url: "https://new.example.com", endpoint: "/reports/sales" }
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+RSpec.describe "Sales report" do
+  it "has no regression" do
+    expect(new_api).to have_no_regression_from(old_api)
+      .with_tolerance(0.01)
+      .ignoring("$.timestamp")
+  end
+end
+```
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+## Usage Examples
+
+### API comparison
+
+```ruby
+old_source = Regresso::Adapters::Http.new(
+  base_url: "https://old.example.com",
+  endpoint: "/api/v1/reports",
+  params: { year: 2024 }
+)
+
+new_source = Regresso::Adapters::Http.new(
+  base_url: "https://new.example.com",
+  endpoint: "/api/v1/reports",
+  params: { year: 2024 }
+)
+
+result = Regresso::Comparator.new(source_a: old_source, source_b: new_source).compare
+puts result.summary
+```
+
+### CSV comparison
+
+```ruby
+old_csv = Regresso::Adapters::Csv.new(path: "tmp/old.csv")
+new_csv = Regresso::Adapters::Csv.new(path: "tmp/new.csv")
+
+result = Regresso::Comparator.new(source_a: old_csv, source_b: new_csv).compare
+puts result.passed?
+```
+
+### Snapshot testing
+
+```ruby
+require "regresso/rspec"
+
+RSpec.describe "Snapshot" do
+  it "matches snapshot" do
+    payload = { "total" => 120 }
+    expect(payload).to match_snapshot("report_total")
+  end
+end
+```
+
+### Tolerance and ignore paths
+
+```ruby
+expect(new_api).to have_no_regression_from(old_api)
+  .with_tolerance(0.01)
+  .with_path_tolerance("$.amount", 0.1)
+  .ignoring("$.updated_at")
+```
+
+### Shared examples
+
+```ruby
+require "regresso/rspec/shared_examples"
+
+include_examples "regresso:api_regression", {
+  old_base_url: ENV["OLD_API"],
+  new_base_url: ENV["NEW_API"],
+  patterns: [{ endpoint: "/api/v1/reports" }]
+}
+```
+
+## Configuration
+
+```ruby
+Regresso.configure do |config|
+  config.default_tolerance = 0.01
+  config.ignore_paths = [/\.id$/, /\.updated_at$/]
+  config.tolerance_overrides = { "$.amount" => 0.1 }
+  config.array_order_sensitive = true
+  config.type_coercion = true
+end
+```
+
+## Adapters
+
+- HTTP: `Regresso::Adapters::Http`
+- CSV: `Regresso::Adapters::Csv`
+- JSON file: `Regresso::Adapters::JsonFile`
+- Proc: `Regresso::Adapters::Proc`
+
+## Test framework integration
+
+- RSpec: `require "regresso/rspec"`
+- Minitest: `require "regresso/minitest"`
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/regresso.
+Bug reports and pull requests are welcome. Please run tests before submitting changes.
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+MIT

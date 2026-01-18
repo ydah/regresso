@@ -5,10 +5,15 @@ require "erb"
 
 module Regresso
   class Reporter
+    # @param result [Regresso::Result]
     def initialize(result)
       @result = result
     end
 
+    # Generates a report string.
+    #
+    # @param format [Symbol]
+    # @return [String]
     def generate(format)
       case format
       when :text

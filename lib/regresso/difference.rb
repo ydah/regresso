@@ -4,6 +4,9 @@ module Regresso
   class Difference
     attr_reader :path, :old_value, :new_value, :type
 
+    # @param path [Regresso::JsonPath]
+    # @param old_value [Object]
+    # @param new_value [Object]
     def initialize(path:, old_value:, new_value:)
       @path = path
       @old_value = old_value
@@ -12,6 +15,9 @@ module Regresso
       freeze
     end
 
+    # Returns a human-readable diff description.
+    #
+    # @return [String]
     def to_s
       "#{path}: #{old_value.inspect} -> #{new_value.inspect}"
     end

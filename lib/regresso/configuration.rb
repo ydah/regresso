@@ -16,14 +16,26 @@ module Regresso
       @type_coercion = true
     end
 
+    # Returns tolerance for a given path.
+    #
+    # @param path [Regresso::JsonPath]
+    # @return [Float]
     def tolerance_for(path)
       @tolerance_overrides[path.to_s] || @default_tolerance
     end
 
+    # Checks if a path should be ignored.
+    #
+    # @param path [Regresso::JsonPath]
+    # @return [Boolean]
     def ignored?(path)
       @ignore_paths.any? { |pattern| path_matches?(path, pattern) }
     end
 
+    # Merges another configuration into a new configuration.
+    #
+    # @param other [Regresso::Configuration]
+    # @return [Regresso::Configuration]
     def merge(other)
       dup.tap do |config|
         unless other.default_tolerance.nil?

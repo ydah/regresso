@@ -4,10 +4,17 @@ require "json"
 
 module Regresso
   class Differ
+    # @param config [Regresso::Configuration]
     def initialize(config)
       @config = config
     end
 
+    # Computes differences between two values.
+    #
+    # @param a [Object]
+    # @param b [Object]
+    # @param path [Regresso::JsonPath]
+    # @return [Array<Regresso::Difference>]
     def diff(a, b, path = JsonPath.root)
       return [] if should_ignore?(path)
 

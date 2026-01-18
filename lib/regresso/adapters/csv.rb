@@ -5,6 +5,10 @@ require "csv"
 module Regresso
   module Adapters
     class Csv < Base
+      # @param path [String,nil]
+      # @param content [String,nil]
+      # @param headers [Boolean]
+      # @param col_sep [String]
       def initialize(path: nil, content: nil, headers: true, col_sep: ",")
         super()
         @path = path
@@ -13,6 +17,9 @@ module Regresso
         @col_sep = col_sep
       end
 
+      # Parses CSV into an array of hashes.
+      #
+      # @return [Array<Hash>]
       def fetch
         csv_content = @content || File.read(@path)
         rows = CSV.parse(csv_content, headers: @headers, col_sep: @col_sep)
@@ -26,6 +33,7 @@ module Regresso
         end
       end
 
+      # @return [String]
       def description
         @path ? "CSV: #{@path}" : "CSV (inline content)"
       end
