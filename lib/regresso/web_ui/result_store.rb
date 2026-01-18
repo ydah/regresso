@@ -15,7 +15,7 @@ module Regresso
 
       def store(result)
         id = SecureRandom.uuid
-        data = { "id" => id, "created_at" => Time.now.iso8601 }.merge(result)
+        data = { "id" => id, "created_at" => Time.now.utc.iso8601(6) }.merge(result)
         File.write(path_for(id), JSON.generate(data))
         @cache[id] = data
         id
@@ -33,7 +33,7 @@ module Regresso
       def list
         Dir.glob(File.join(@storage_path, "*.json")).map do |path|
           find(File.basename(path, ".json"))
-        end.compact.sort_by { |entry| entry["created_at"] }.reverse
+        end.compact.sort_by { |entry| Time.parse(entry["created_at"].to_s) }.reverse
       end
 
       def delete(id)
