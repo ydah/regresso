@@ -1,20 +1,34 @@
 # Regresso
 
-Regresso is a regression testing gem for Ruby applications. It compares outputs (API JSON, CSV exports, or arbitrary data) across environments and detects unintended differences.
+<p align="center">
+  <b>Regression testing for Ruby APIs, files, and data snapshots.</b>
+  <br>
+  Compare outputs across environments with tolerances and ignore rules.
+</p>
 
-## Installation
+<p align="center">
+  <a href="https://rubygems.org/gems/regresso">
+    <img src="https://img.shields.io/gem/v/regresso?color=2f6f6f" alt="Gem version">
+  </a>
+  <img src="https://img.shields.io/badge/ruby-%3E%3D%203.0-701516" alt="Ruby version">
+  <img src="https://img.shields.io/badge/license-MIT-2f6f6f" alt="License">
+</p>
 
-Add to your Gemfile:
+<p align="center">
+  <a href="#features">Features</a> •
+  <a href="#quick-start">Quick Start</a> •
+  <a href="#how-it-works">How It Works</a> •
+  <a href="#installation">Installation</a> •
+  <a href="#configuration">Configuration</a>
+</p>
 
-```bash
-bundle add regresso
-```
+## Features
 
-Or install directly:
-
-```bash
-gem install regresso
-```
+- Compare API responses, CSV exports, JSON files, or custom data sources
+- Tolerances and per-path overrides for numeric differences
+- Ignore paths by JSONPath or regex to avoid noisy fields
+- Snapshot testing for stable outputs
+- RSpec and Minitest integrations
 
 ## Quick Start
 
@@ -32,6 +46,13 @@ RSpec.describe "Sales report" do
   end
 end
 ```
+
+## How It Works
+
+1. Build two data sources (old and new)
+2. Normalize and compare outputs
+3. Apply tolerances and ignore rules
+4. Report a diff summary and pass/fail result
 
 ## Usage Examples
 
@@ -98,6 +119,20 @@ include_examples "regresso:api_regression", {
 }
 ```
 
+## Installation
+
+Add to your Gemfile:
+
+```bash
+bundle add regresso
+```
+
+Or install directly:
+
+```bash
+gem install regresso
+```
+
 ## Configuration
 
 ```ruby
@@ -128,4 +163,4 @@ Bug reports and pull requests are welcome. Please run tests before submitting ch
 
 ## License
 
-MIT
+MIT License. See `LICENSE` file for details.
