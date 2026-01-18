@@ -32,6 +32,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "faraday", "~> 2.0"
   spec.add_dependency "faraday-follow_redirects", "~> 0.3"
+  spec.add_dependency "csv", "~> 3.2"
 
   spec.add_development_dependency "rspec", "~> 3.12"
   spec.add_development_dependency "minitest", "~> 5.18"
