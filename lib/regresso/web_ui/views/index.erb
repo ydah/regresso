@@ -1,0 +1,58 @@
+<section class="app-shell">
+  <header class="app-header">
+    <div>
+      <p class="kicker">Regresso</p>
+      <h1>Regression Hub</h1>
+      <p class="subtitle">Compare environments, surface drift, and keep releases honest.</p>
+    </div>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-label">Runs</span>
+        <span class="stat-value" id="stat-total">0</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Passed</span>
+        <span class="stat-value" id="stat-passed">0</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Failed</span>
+        <span class="stat-value" id="stat-failed">0</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <section class="panel panel-list">
+      <div class="panel-header">
+        <h2>Recent Runs</h2>
+        <button class="button" id="refresh">Refresh</button>
+      </div>
+      <div class="list" id="results-list"></div>
+    </section>
+
+    <section class="panel panel-detail">
+      <div class="panel-header">
+        <div>
+          <h2 id="detail-title">Select a run</h2>
+          <p class="detail-meta" id="detail-meta">No run selected</p>
+        </div>
+        <div class="filters">
+          <input id="filter-path" class="input" type="text" placeholder="Filter by path">
+          <select id="filter-type" class="select">
+            <option value="">All types</option>
+            <option value="added">Added</option>
+            <option value="removed">Removed</option>
+            <option value="changed">Changed</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="detail-grid">
+        <div class="summary" id="detail-summary"></div>
+        <div class="diffs" id="detail-diffs">
+          <div class="empty">Pick a run to see differences.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+</section>

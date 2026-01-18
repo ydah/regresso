@@ -35,6 +35,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency "csv", "~> 3.2"
   spec.add_dependency "builder", "~> 3.2"
   spec.add_dependency "base64", "~> 0.2"
+  spec.add_dependency "sinatra", "~> 3.0"
+  spec.add_dependency "ostruct", "~> 0.6"
 
   spec.add_development_dependency "rspec", "~> 3.12"
   spec.add_development_dependency "minitest", "~> 5.18"
@@ -45,4 +47,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "octokit", "~> 6.0"
   spec.add_development_dependency "activerecord", ">= 6.0", "< 7.1"
   spec.add_development_dependency "sqlite3", "~> 1.7"
+  spec.add_development_dependency "rack-test", "~> 2.1"
 end
